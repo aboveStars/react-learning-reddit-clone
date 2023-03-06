@@ -1,0 +1,29 @@
+import { extendTheme } from "@chakra-ui/react";
+import "@fontsource/open-sans/300.css";
+import "@fontsource/open-sans/400.css";
+import "@fontsource/open-sans/700.css";
+import { Button } from "./button"; // this is our button theme
+
+export const theme = extendTheme({
+  colors: {
+    brand: {
+      100: "#FF3C00",
+    },
+  },
+  fonts: {
+    body: "Open Sans, sans-serif",
+  },
+
+  // Setting Background
+  styles: {
+    global: () => ({
+      body: {
+        bg: "gray.200",
+      },
+    }),
+  },
+  // Settings for "buttons,text box..." globally
+  components: {
+    Button,
+  },
+});
