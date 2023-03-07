@@ -1,23 +1,42 @@
 import { authModalState } from "@/src/atoms/authModalAtom";
+import { auth } from "@/src/firebase/clientApp";
 import { Button, Flex, Input, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useSetRecoilState } from "recoil";
+import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { FIREBASE_ERRORS } from "@/src/firebase/errors";
 
 const SignUp: React.FC = () => {
-  const setAuthModalState = useSetRecoilState(authModalState);
   const [signUpForm, setSignUpForm] = useState({
     email: "",
     password: "",
     confirmPassword: "",
   });
 
-  const onSubmit = () => {};
+  const setAuthModalState = useSetRecoilState(authModalState);
+
+  const [createUserWithEmailAndPassword, user, loading, userError] =
+    useCreateUserWithEmailAndPassword(auth);
+
+  const [error, setError] = useState("");
+
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError("");
+    if (signUpForm.password !== signUpForm.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    createUserWithEmailAndPassword(signUpForm.email, signUpForm.password);
+  };
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSignUpForm((prev) => ({
       ...prev,
       [event.target.name]: event.target.value,
     }));
   };
+
   return (
     <>
       <form onSubmit={onSubmit}>
@@ -72,7 +91,20 @@ const SignUp: React.FC = () => {
           }}
           bg="gray.50"
         />
-        <Button width="100%" height="36px" mt={2} mb={2} type="submit">
+
+        <Text textAlign="center" color="red" fontSize="10pt">
+          {error ||
+            FIREBASE_ERRORS[userError?.message as keyof typeof FIREBASE_ERRORS]}
+        </Text>
+
+        <Button
+          width="100%"
+          height="36px"
+          mt={2}
+          mb={2}
+          type="submit"
+          isLoading={loading}
+        >
           Sign Up
         </Button>
         <Flex fontSize="9pt" justify="center">
