@@ -8,10 +8,12 @@ import {
   Icon,
   Flex,
   MenuDivider,
+  Text,
 } from "@chakra-ui/react";
 import { signOut, User } from "firebase/auth";
 import React from "react";
 import { FaRedditSquare } from "react-icons/fa";
+import { IoMdStar } from "react-icons/io";
 import { VscAccount } from "react-icons/vsc";
 import { CgProfile } from "react-icons/cg";
 import { MdOutlineLogin } from "react-icons/md";
@@ -47,7 +49,26 @@ const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
                     color="gray.300"
                     mr={0.5}
                   />
+                  <Flex
+                    direction="column"
+                    mr={2}
+                    display={{
+                      base: "none",
+                      md: "flex",
+                    }}
+                  >
+                    <Text fontSize="8pt" fontWeight={700}>
+                      {user?.displayName || user.email?.split("@")[0]}
+                    </Text>
+                    <Flex align="center">
+                      <Icon as={IoMdStar} fontSize={10} />
+                      <Text fontSize="8pt" color="gray.500">
+                        1 Karma
+                      </Text>
+                    </Flex>
+                  </Flex>
                 </>
+
                 <ChevronDownIcon />
               </Flex>
             </Flex>
