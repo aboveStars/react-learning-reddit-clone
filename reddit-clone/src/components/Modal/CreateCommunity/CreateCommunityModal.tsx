@@ -220,6 +220,7 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({
               height="30px"
               onClick={handleCreateCommunity}
               isLoading={loading}
+              
             >
               Create Community
             </Button>

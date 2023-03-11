@@ -10,13 +10,13 @@ const PageContent: React.FC<PageContentProps> = ({ children }) => {
   return (
     <>
       {/** Outer Top Flex */}
-      <Flex justify="center" p="16px" border="1px solid red">
+      <Flex justify="center" p="16px">
         {/** Main Content Flex  */}
         <Flex
           width="95%"
           justify="center"
           maxWidth="860px"
-          border="1px solid green"
+         
         >
           {/** Left Content */}
           <Flex
@@ -29,7 +29,7 @@ const PageContent: React.FC<PageContentProps> = ({ children }) => {
               base: 0,
               md: 6,
             }}
-            border="1px solid blue"
+           
           >
             {children && children[0 as keyof typeof children]}
           </Flex>
@@ -40,7 +40,7 @@ const PageContent: React.FC<PageContentProps> = ({ children }) => {
               md: "flex",
             }}
             flexGrow={1}
-            border="1px solid orange"
+            
           >
             {children && children[1 as keyof typeof children]}
           </Flex>

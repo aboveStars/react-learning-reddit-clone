@@ -3,10 +3,11 @@ import CreatePostLink from "@/src/components/Community/CreatePostLink";
 import Header from "@/src/components/Community/Header";
 import NotFound from "@/src/components/Community/NotFound";
 import PageContent from "@/src/components/Layout/PageContent";
+import Posts from "@/src/components/Posts/Posts";
 import { firestore } from "@/src/firebase/clientApp";
-import { Flex, Text } from "@chakra-ui/react";
+
 import { doc, getDoc } from "firebase/firestore";
-import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import { GetServerSidePropsContext } from "next";
 import React from "react";
 import safeJsonStringify from "safe-json-stringify";
 
@@ -26,6 +27,7 @@ const CommunityPage: React.FC<CommunityPageProps> = ({ communityData }) => {
         {/** Left */}
         <>
           <CreatePostLink />
+          <Posts communityData={communityData} />
         </>
         {/** Right */}
         <>
