@@ -30,6 +30,7 @@ import {
 import { Timestamp } from "firebase/firestore";
 import { firestore, storage } from "@/src/firebase/clientApp";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import useSelectFile from "@/src/hooks/useSelectFile";
 
 const formTabs = [
   {
@@ -69,7 +70,8 @@ const NewPostForm: React.FC<NewPostForms> = ({ user }) => {
     title: "",
     body: "",
   });
-  const [selectedFile, setSelectedFile] = useState<string>();
+
+  const { onSelectFile, selectedFile, setSelectedFile } = useSelectFile();
 
   const [loading, setLoading] = useState(false);
 
@@ -117,20 +119,6 @@ const NewPostForm: React.FC<NewPostForms> = ({ user }) => {
     setLoading(false);
   };
 
-  const onSelectImage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const reader = new FileReader();
-
-    if (event.target.files?.[0]) {
-      reader.readAsDataURL(event.target.files[0]);
-    }
-
-    reader.onload = (readerEvent) => {
-      if (readerEvent.target?.result) {
-        setSelectedFile(readerEvent.target.result as string);
-      }
-    };
-  };
-
   const onTextChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -169,7 +157,7 @@ const NewPostForm: React.FC<NewPostForms> = ({ user }) => {
           {selectedTab === "Images & Video" && (
             <ImageUpload
               selectedFile={selectedFile}
-              onSelectImage={onSelectImage}
+              onSelectImage={onSelectFile}
               setSelectedTab={setSelectedTab}
               setSelectedFile={setSelectedFile}
             />
