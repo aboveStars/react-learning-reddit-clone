@@ -32,7 +32,8 @@ const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
   const logout = async () => {
     await signOut(auth);
     //clear community state
-    resetCommunityState();
+    // resetCommunityState();
+    
   };
 
   return (
