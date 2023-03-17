@@ -62,9 +62,10 @@ export type TabItem = {
 
 type NewPostForms = {
   user: User;
+  communityImageURL?: string;
 };
 
-const NewPostForm: React.FC<NewPostForms> = ({ user }) => {
+const NewPostForm: React.FC<NewPostForms> = ({ user, communityImageURL }) => {
   const [selectedTab, setSelectedTab] = useState(formTabs[0].title);
   const [textInputs, setTextInputs] = useState({
     title: "",
@@ -85,6 +86,7 @@ const NewPostForm: React.FC<NewPostForms> = ({ user }) => {
 
     const newPost: Post = {
       communityId: communityId as string,
+      communityImageUrl: communityImageURL || "",
       creatorId: user.uid,
       creatorDisplayName: user.email!.split("@")[0],
       title: textInputs.title,

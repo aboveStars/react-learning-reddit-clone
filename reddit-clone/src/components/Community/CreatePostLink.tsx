@@ -5,18 +5,35 @@ import { FaReddit } from "react-icons/fa";
 import { IoIosImage } from "react-icons/io";
 import { BsLink45Deg } from "react-icons/bs";
 import { useRouter } from "next/router";
+import useDirectory from "@/src/hooks/useDirectory";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/src/firebase/clientApp";
+import { useSetRecoilState } from "recoil";
+import { authModalState } from "@/src/atoms/authModalAtom";
 
 const CreatePostLink: React.FC = () => {
   const router = useRouter();
+  const [user] = useAuthState(auth);
+  const setAuthModalState = useSetRecoilState(authModalState);
+  const { toggleMenuOpen } = useDirectory();
 
   const onClick = () => {
-    console.log("clicked");
+    if (!user) {
+      setAuthModalState({
+        open: true,
+        view: "login",
+      });
+      return;
+    }
+
     const { communityId } = router.query;
+
     if (communityId) {
-      console.log("Community Available");
       router.push(`/r/${communityId}/submit`);
       return;
     }
+
+    toggleMenuOpen();
   };
 
   return (
