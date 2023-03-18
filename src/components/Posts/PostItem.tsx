@@ -58,9 +58,7 @@ const PostItem: React.FC<PostItemProps> = ({
 
   const signlePostPage = !onSelectPost;
 
-  const handleDelete = async (
-    event: React.MouseEvent<SVGElement, MouseEvent>
-  ) => {
+  const handleDelete = async (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
     setLoadingDelete(true);
     try {
